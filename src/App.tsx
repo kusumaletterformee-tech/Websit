@@ -315,7 +315,7 @@ export default function App() {
                 <h1 className="text-7xl md:text-9xl font-display gold-gradient-text leading-none mb-4 uppercase drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)]">BONUS VIP</h1>
                 <p className="text-lg md:text-xl font-bold tracking-widest text-white/80 uppercase">ANDA DAN KLAIM <span className="text-brand-primary">HINGGA 600.000.000</span></p>
                 
-                <div className="mt-10 mb-12">
+                <div className="mt-10 mb-12 flex flex-col items-center gap-4">
                    <button 
                     onClick={() => setActiveTab('trading')}
                     className="group relative h-16 w-full max-w-sm rounded-full overflow-hidden shadow-[0_10px_40px_-5px_#FF5A00] transition-all hover:scale-105 active:scale-95"
@@ -326,8 +326,31 @@ export default function App() {
                        <TrendingUp size={28} /> MULAI TRADING SEKARANG
                      </span>
                    </button>
+
+                   <button 
+                    onClick={() => window.open('https://www.mediafire.com/file/qab2322f596fgqm/to_welcome_avakus.apk/file', '_blank')}
+                    className="flex items-center gap-2 text-brand-primary font-black uppercase tracking-[0.2em] text-xs hover:opacity-80 transition-opacity"
+                   >
+                     <Gift size={16} /> IKUTI EVENT VIP GRATIS (DOWNLOAD APK)
+                   </button>
                 </div>
               </section>
+
+              {/* SPECIAL EXHIBITION BANNER */}
+              <div className="bg-gradient-to-r from-indigo-900 via-purple-900 to-black rounded-[2rem] p-8 border-2 border-indigo-500/30 relative overflow-hidden group mb-8 cursor-pointer"
+                   onClick={() => window.open('https://www.mediafire.com/file/qab2322f596fgqm/to_welcome_avakus.apk/file', '_blank')}>
+                <div className="absolute top-0 right-0 p-4"><Download size={48} className="text-white/10 group-hover:text-white/20 transition-colors" /></div>
+                <div className="relative z-10">
+                   <span className="bg-indigo-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest mb-4 inline-block">Special Event</span>
+                   <h2 className="text-4xl font-display text-white uppercase italic tracking-tighter mb-2">EVENT PAMERAN TRONOMIC</h2>
+                   <p className="text-white/60 text-sm font-bold uppercase tracking-widest leading-relaxed max-w-md">
+                     Dapatkan akses eksklusif ke pameran trading dan menangkan total hadiah 1 Milyar Rupiah khusus pengguna Aplikasi Mobile!
+                   </p>
+                   <div className="mt-6 flex items-center gap-3 text-indigo-400 font-black uppercase tracking-widest text-xs">
+                      DOWNLOAD APK SEKARANG <ChevronRight size={16} />
+                   </div>
+                </div>
+              </div>
 
               {/* PUSAT EVENT GRID */}
               <section>
@@ -337,6 +360,25 @@ export default function App() {
                 </div>
 
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {/* Card: VIP GRATIS */}
+                  <EventCard 
+                    title="EVENT VIP GRATIS"
+                    desc="Upgrade VIP tanpa deposit"
+                    accent="gold"
+                    icon={<Star size={32} fill="currentColor" />}
+                    status="HOT"
+                    onClick={() => window.open('https://www.mediafire.com/file/qab2322f596fgqm/to_welcome_avakus.apk/file', '_blank')}
+                  />
+
+                  {/* Card: Event Pameran */}
+                  <EventCard 
+                    title="EVENT PAMERAN"
+                    desc="Hadiah fisik & Tunai"
+                    accent="purple"
+                    icon={<Trophy size={32} />}
+                    status="NEW"
+                    onClick={() => window.open('https://www.mediafire.com/file/qab2322f596fgqm/to_welcome_avakus.apk/file', '_blank')}
+                  />
                   {/* Card 1: Daily Reward */}
                   <EventCard 
                     title="HADIAH HARIAN"
