@@ -1,0 +1,6 @@
+{
+  "name": "TronoMic",
+  "description": "Prediksi tren pasar saham berbasis AI untuk membantu keputusan trading Anda.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
