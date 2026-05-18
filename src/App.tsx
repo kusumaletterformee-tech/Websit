@@ -425,18 +425,18 @@ export default function App() {
                     }
                   />
 
-                  {/* Card 3: Bonus Deposit */}
+                  {/* Card 3: Metode Pembayaran */}
                   <EventCard 
-                    title="BONUS DEPOSIT"
-                    desc="Bonus 100% Saldo Baru"
+                    title="METODE PEMBAYARAN"
+                    desc="Bank, E-Wallet & Crypto"
                     accent="orange"
-                    icon={<Zap size={32} />}
-                    status="POPULER"
+                    icon={<Wallet size={32} />}
+                    status="OTOMATIS"
                     onClick={() => setSelectedEvent({
-                      title: "BONUS DEPOSIT",
-                      desc: "Bonus 100% Saldo Baru",
-                      detail: "Dapatkan tambahan saldo 100% untuk setiap deposit pertama di minggu ini. Bonus maksimal hingga 1.000 USDT. Persyaratan turnover 5x volume trading.",
-                      icon: <Zap size={40} />
+                      title: "METODE PEMBAYARAN",
+                      desc: "Pembayaran Instan & Aman",
+                      detail: "Kami mendukung berbagai metode pembayaran termasuk Bank (BCA, Mandiri, BNI, BRI), E-Wallet (DANA, OVO, GoPay, LinkAja), Virtual Account, dan Pembayaran Crypto (USDT, BTC, ETH). Semua transaksi diproses secara real-time untuk kenyamanan trading Anda.",
+                      icon: <Wallet size={40} />
                     })}
                   />
 
