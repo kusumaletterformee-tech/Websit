@@ -344,7 +344,7 @@ export default function App() {
                    <span className="bg-indigo-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest mb-4 inline-block">Special Event</span>
                    <h2 className="text-4xl font-display text-white uppercase italic tracking-tighter mb-2">EVENT PAMERAN TRONOMIC</h2>
                    <p className="text-white/60 text-sm font-bold uppercase tracking-widest leading-relaxed max-w-md">
-                     Dapatkan akses eksklusif ke pameran trading dan menangkan total hadiah 1 Milyar Rupiah khusus pengguna Aplikasi Mobile!
+                     Dapatkan akses eksklusif ke pameran trading dan menangkan beragam total hadiah khusus pengguna Tronomic Mobile!
                    </p>
                    <div className="mt-6 flex items-center gap-3 text-indigo-400 font-black uppercase tracking-widest text-xs">
                       DOWNLOAD APK SEKARANG <ChevronRight size={16} />
