@@ -111,7 +111,7 @@ export default function App() {
   };
 
   const selectedMarket = useMemo(() => 
-    markets.find(m => m.id === selectedMarketId) || markets[0], 
+    markets.find(m => m.id === selectedMarketId) || markets[0] || INITIAL_MARKETS[0], 
   [markets, selectedMarketId]);
 
   const handleClaimDaily = () => {
@@ -282,7 +282,6 @@ export default function App() {
 
       {/* Main Content Area */}
       <main className="max-w-4xl mx-auto px-4 py-8 relative z-10">
-        
         <AnimatePresence mode="wait">
           {activeTab === 'home' && (
             <motion.div 
@@ -545,7 +544,7 @@ export default function App() {
             </motion.div>
           )}
 
-          {activeTab === 'trading' && (
+          {activeTab === 'trading' && selectedMarket && (
             <motion.div 
               key="trading"
               initial={{ opacity: 0, x: 20 }}
@@ -617,7 +616,7 @@ export default function App() {
                       </button>
                    </div>
                    
-                   {prediction && (
+                   {prediction && prediction.trend && (
                      <div className="flex gap-4 items-center bg-white/5 p-4 rounded-xl border border-white/5 animate-in slide-in-from-top-2">
                         <div className="text-center min-w-[80px]">
                            <div className="text-[10px] font-black text-white/40 uppercase mb-1">Tren AI</div>
@@ -712,7 +711,7 @@ export default function App() {
                           <td className="px-4 py-4 font-mono text-xs opacity-60">{trade.amount.toFixed(4)}</td>
                           <td className="px-4 py-4 font-mono text-sm font-bold gold-gradient-text">${(trade.price * trade.amount).toLocaleString()}</td>
                           <td className="px-6 py-4 text-right text-[10px] font-black opacity-30 uppercase tracking-widest">
-                            {trade.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                            {trade.timestamp instanceof Date ? trade.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'N/A'}
                           </td>
                         </tr>
                       )) : (
@@ -741,7 +740,6 @@ export default function App() {
             </motion.div>
           )}
         </AnimatePresence>
-
       </main>
 
       {/* Bottom Floating App Bar */}
