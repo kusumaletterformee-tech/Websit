@@ -257,9 +257,6 @@ export default function App() {
       {/* Static Header / Nav */}
       <header className="h-20 flex items-center justify-between px-6 border-b border-white/5 bg-black/40 backdrop-blur-xl sticky top-0 z-50">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-primary to-yellow-600 flex items-center justify-center text-black shadow-[0_0_20px_-5px_#FFD700]">
-             <Zap size={24} fill="currentColor" />
-          </div>
           <span className="text-2xl font-display font-black tracking-tighter gold-gradient-text uppercase">TRONOMIC.COM</span>
         </div>
 
