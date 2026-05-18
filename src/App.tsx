@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, Component } from 'react';
 import { 
   TrendingUp, 
   TrendingDown, 
@@ -91,7 +91,7 @@ const VIP_LEVELS = [
 
 export default function App() {
   const [markets, setMarkets] = useState<Market[]>(INITIAL_MARKETS);
-  const [selectedMarketId, setSelectedMarketId] = useState<string>(INITIAL_MARKETS[0].id);
+  const [selectedMarketId, setSelectedMarketId] = useState<string>(INITIAL_MARKETS[0]?.id || '1');
   const [balance, setBalance] = useState(10000);
   const [history, setHistory] = useState<Trade[]>([]);
   const [prediction, setPrediction] = useState<Prediction | null>(null);
@@ -111,7 +111,7 @@ export default function App() {
   };
 
   const selectedMarket = useMemo(() => 
-    markets.find(m => m.id === selectedMarketId) || markets[0] || INITIAL_MARKETS[0], 
+    (markets || []).find(m => m.id === selectedMarketId) || (markets || INITIAL_MARKETS)[0] || INITIAL_MARKETS[0], 
   [markets, selectedMarketId]);
 
   const handleClaimDaily = () => {
@@ -288,62 +288,82 @@ export default function App() {
               exit={{ opacity: 0, y: -20 }}
               className="space-y-8"
             >
-              {/* Massive Hero Section */}
-              <section className="text-center py-10 relative">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-brand-primary/10 blur-[100px] rounded-full -z-10" />
+              {/* Daily Reward Notification */}
+              <AnimatePresence>
+                {showClaimAnimation && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 50, scale: 0.5 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -50 }}
+                    className="fixed top-1/4 left-1/2 -translate-x-1/2 z-[100] bg-brand-primary rounded-2xl p-6 shadow-[0_0_50px_#FFD700] text-black font-black flex flex-col items-center gap-2"
+                  >
+                    <Coins size={48} className="animate-bounce" />
+                    <span className="text-2xl uppercase italic tracking-tighter">+1.00 USDT CLAIMED!</span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Main Banner Hero Section */}
+              <section className="relative rounded-[2.5rem] overflow-hidden border border-white/10 group shadow-[0_20px_50px_-20px_rgba(0,0,0,0.5)]">
+                {/* Background Image with Overlay */}
+                <div className="absolute inset-0 z-0">
+                  <img 
+                    src="/src/assets/images/tronomic_trading_banner_1779098495469.png" 
+                    alt="Tronomic Trading Banner"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" />
+                </div>
                 
-                {/* Daily Reward Notification */}
-                <AnimatePresence>
-                  {showClaimAnimation && (
-                    <motion.div 
-                      initial={{ opacity: 0, y: 50, scale: 0.5 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: -50 }}
-                      className="fixed top-1/4 left-1/2 -translate-x-1/2 z-[100] bg-brand-primary rounded-2xl p-6 shadow-[0_0_50px_#FFD700] text-black font-black flex flex-col items-center gap-2"
+                <div className="relative z-10 p-8 md:p-12 text-left">
+                  <div className="inline-flex items-center gap-2 bg-brand-primary/20 backdrop-blur-md px-4 py-1.5 rounded-full border border-brand-primary/30 mb-6">
+                    <Zap size={14} className="text-brand-primary" fill="currentColor" />
+                    <span className="text-[10px] font-black text-brand-primary uppercase tracking-widest">Platform Terpercaya 2026</span>
+                  </div>
+
+                  <h1 className="text-4xl md:text-6xl font-display gold-gradient-text uppercase leading-[0.9] tracking-tighter mb-4 max-w-md">
+                    TRONOMIC <br /> TRADING VIP
+                  </h1>
+                  
+                  <p className="text-white/60 text-sm md:text-base font-medium max-w-sm mb-8 leading-relaxed">
+                    Akses eksklusif fitur trading AI, sinyal akurat, dan bonus deposit hingga <span className="text-brand-primary font-bold">600 Juta Rupiah</span>.
+                  </p>
+
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <button 
+                      onClick={() => setActiveTab('trading')}
+                      className="h-12 px-8 rounded-xl bg-brand-primary text-black font-black uppercase text-xs tracking-widest hover:brightness-110 active:scale-95 transition-all shadow-[0_10px_20px_-10px_#FFD700]"
                     >
-                      <Coins size={48} className="animate-bounce" />
-                      <span className="text-2xl uppercase italic tracking-tighter">+1.00 USDT CLAIMED!</span>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                      Mulai Trading
+                    </button>
+                    <button 
+                      onClick={() => window.open('https://www.mediafire.com/file/qab2322f596fgqm/to_welcome_avakus.apk/file', '_blank')}
+                      className="h-12 px-8 rounded-xl bg-white/5 border border-white/10 text-white font-black uppercase text-xs tracking-widest hover:bg-white/10 active:scale-95 transition-all text-center flex items-center justify-center gap-2"
+                    >
+                      <Download size={16} /> Download APK
+                    </button>
+                  </div>
+                </div>
 
-                <h2 className="text-3xl font-display text-white/60 mb-2 uppercase tracking-widest">TINGKATAN</h2>
-                <h1 className="text-7xl md:text-9xl font-display gold-gradient-text leading-none mb-4 uppercase drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)]">BONUS VIP</h1>
-                <p className="text-lg md:text-xl font-bold tracking-widest text-white/80 uppercase">ANDA DAN KLAIM <span className="text-brand-primary">HINGGA 600.000.000</span></p>
-                
-                <div className="mt-10 mb-12 flex flex-col items-center gap-4">
-                   <button 
-                    onClick={() => setActiveTab('trading')}
-                    className="group relative h-16 w-full max-w-sm rounded-full overflow-hidden shadow-[0_10px_40px_-5px_#FF5A00] transition-all hover:scale-105 active:scale-95"
-                   >
-                     <div className="absolute inset-0 bg-gradient-to-r from-brand-accent to-orange-400" />
-                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
-                     <span className="relative z-10 text-white font-black text-2xl tracking-tighter uppercase flex items-center justify-center gap-3 italic">
-                       <TrendingUp size={28} /> MULAI TRADING SEKARANG
-                     </span>
-                   </button>
-
-                   <button 
-                    onClick={() => window.open('https://www.mediafire.com/file/qab2322f596fgqm/to_welcome_avakus.apk/file', '_blank')}
-                    className="flex items-center gap-2 text-brand-primary font-black uppercase tracking-[0.2em] text-xs hover:opacity-80 transition-opacity"
-                   >
-                     <Gift size={16} /> IKUTI EVENT VIP GRATIS (DOWNLOAD APK)
-                   </button>
+                {/* Animated Light Sweep */}
+                <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                  <div className="absolute top-0 left-[-100%] w-[50%] h-full bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-[-25deg] animate-[sweep_5s_infinite]" />
                 </div>
               </section>
 
               {/* SPECIAL EXHIBITION BANNER */}
-              <div className="bg-gradient-to-r from-indigo-900 via-purple-900 to-black rounded-[2rem] p-8 border-2 border-indigo-500/30 relative overflow-hidden group mb-8 cursor-pointer"
+              <div className="bg-gradient-to-r from-purple-900 via-blue-900 to-black rounded-[2rem] p-8 border-2 border-brand-accent/30 relative overflow-hidden group mb-8 cursor-pointer"
                    onClick={() => window.open('https://www.mediafire.com/file/qab2322f596fgqm/to_welcome_avakus.apk/file', '_blank')}>
                 <div className="absolute top-0 right-0 p-4"><Download size={48} className="text-white/10 group-hover:text-white/20 transition-colors" /></div>
                 <div className="relative z-10">
-                   <span className="bg-indigo-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest mb-4 inline-block">Special Event</span>
+                   <span className="bg-brand-secondary text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest mb-4 inline-block">Special Event</span>
                    <h2 className="text-4xl font-display text-white uppercase italic tracking-tighter mb-2">EVENT PAMERAN TRONOMIC</h2>
                    <p className="text-white/60 text-sm font-bold uppercase tracking-widest leading-relaxed max-w-md">
                      Dapatkan akses eksklusif ke pameran trading dan menangkan beragam total hadiah khusus pengguna Tronomic Mobile!
                    </p>
-                   <div className="mt-6 flex items-center gap-3 text-indigo-400 font-black uppercase tracking-widest text-xs">
-                      DOWNLOAD APK SEKARANG <ChevronRight size={16} />
+                   <div className="mt-6 flex items-center gap-3 text-brand-accent font-black uppercase tracking-widest text-xs">
+                       DOWNLOAD APK SEKARANG <ChevronRight size={16} />
                    </div>
                 </div>
               </div>
@@ -379,7 +399,7 @@ export default function App() {
                   <EventCard 
                     title="HADIAH HARIAN"
                     desc="Klaim 1.00 USDT gratis"
-                    accent="green"
+                    accent="purple"
                     icon={<Coins size={32} />}
                     action={
                       <button 
@@ -425,7 +445,7 @@ export default function App() {
                   <EventCard 
                     title="METODE PEMBAYARAN"
                     desc="Bank, E-Wallet & Crypto"
-                    accent="orange"
+                    accent="blue"
                     icon={<Wallet size={32} />}
                     status="OTOMATIS"
                     onClick={() => setSelectedEvent({
@@ -472,8 +492,8 @@ export default function App() {
               </section>
 
               {/* VIP Progress Card (Image Style) */}
-              <section className="bg-gradient-to-b from-[#0F300F] to-[#051505] rounded-[2rem] border-4 border-yellow-500/20 p-8 vip-card-shadow relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-brand-primary/10 blur-[60px] -mr-10 -mt-10" />
+              <section className="bg-gradient-to-b from-[#1A0B3C] to-[#0A0518] rounded-[2rem] border-4 border-brand-primary/20 p-8 blue-glow-shadow relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-brand-accent/10 blur-[60px] -mr-10 -mt-10" />
                 <div className="flex flex-col items-center text-center">
                   <div className="px-6 py-2 bg-black/50 border border-brand-primary/50 rounded-xl mb-6 flex items-center gap-3">
                     <Star className="text-brand-primary" fill="currentColor" size={20} />
@@ -504,7 +524,7 @@ export default function App() {
                      <BonusCard 
                       title="BONUS BULANAN" 
                       subtitle="SETIAP TANGGAL 1" 
-                      icon={<Gift className="text-orange-400" size={32} />}
+                      icon={<Gift className="text-brand-accent" size={32} />}
                       value="300.00"
                      />
                      <BonusCard 
@@ -523,15 +543,15 @@ export default function App() {
                     <h3 className="text-xs font-black uppercase tracking-[0.2em] text-white/40 italic">PASAR TERPANAS</h3>
                     <button onClick={() => setActiveTab('trading')} className="text-[10px] font-black text-brand-primary flex items-center gap-1 uppercase">LIHAT SEMUA <ChevronRight size={12} /></button>
                  </div>
-                 <div className="grid grid-cols-2 gap-3">
-                    {markets.slice(0, 2).map(m => (
+                  <div className="grid grid-cols-2 gap-3">
+                    {(markets || []).slice(0, 2).map(m => (
                       <div key={m.id} className="bg-bg-card p-4 rounded-2xl border border-white/5 flex items-center justify-between">
                          <div>
                             <div className="text-xs font-black uppercase opacity-40">{m.symbol}</div>
-                            <div className="text-lg font-display gold-gradient-text">${m.price.toLocaleString()}</div>
+                            <div className="text-lg font-display gold-gradient-text">${(m.price || 0).toLocaleString()}</div>
                          </div>
-                         <div className={cn("text-xs font-bold", m.change >= 0 ? "text-brand-secondary" : "text-red-500")}>
-                           {m.change >= 0 ? '+' : ''}{m.change.toFixed(1)}%
+                         <div className={cn("text-xs font-bold", (m.change || 0) >= 0 ? "text-brand-secondary" : "text-red-500")}>
+                           {(m.change || 0) >= 0 ? '+' : ''}{(m.change || 0).toFixed(1)}%
                          </div>
                       </div>
                     ))}
@@ -552,7 +572,7 @@ export default function App() {
               {/* Trading Dashboard (Keep the powerful features) */}
               <div className="bg-bg-card rounded-3xl border border-white/10 p-6 space-y-6">
                 <div className="flex overflow-x-auto no-scrollbar gap-4 pb-2">
-                   {markets.map(m => (
+                   {(markets || []).map(m => (
                      <button 
                       key={m.id}
                       onClick={() => setSelectedMarketId(m.id)}
@@ -569,22 +589,22 @@ export default function App() {
                 <div className="flex items-center justify-between">
                   <div>
                     <h2 className="text-xs text-white/30 font-black uppercase tracking-widest">Harga {selectedMarket.name}</h2>
-                    <h1 className="text-4xl font-display gold-gradient-text tracking-tighter">${selectedMarket.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}</h1>
+                    <h1 className="text-4xl font-display gold-gradient-text tracking-tighter">${(selectedMarket.price || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}</h1>
                   </div>
                   <div className={cn(
                     "flex flex-col items-end",
-                    selectedMarket.change >= 0 ? "text-brand-secondary" : "text-red-500"
+                    (selectedMarket.change || 0) >= 0 ? "text-brand-secondary" : "text-red-500"
                   )}>
                     <div className="flex items-center gap-1 font-black text-lg italic">
-                      {selectedMarket.change >= 0 ? <TrendingUp size={20} /> : <TrendingDown size={20} />}
-                      {selectedMarket.change.toFixed(2)}%
+                      {(selectedMarket.change || 0) >= 0 ? <TrendingUp size={20} /> : <TrendingDown size={20} />}
+                      {(selectedMarket.change || 0).toFixed(2)}%
                     </div>
                   </div>
                 </div>
 
                 <div className="h-[250px] w-full">
                   <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={selectedMarket.history}>
+                    <AreaChart data={selectedMarket.history || []}>
                       <defs>
                         <linearGradient id="colorGold" x1="0" y1="0" x2="0" y2="1">
                           <stop offset="5%" stopColor="#FFD700" stopOpacity={0.3}/>
@@ -748,7 +768,7 @@ export default function App() {
             onClick={() => setActiveTab('home')}
             className={cn(
               "w-16 h-16 rounded-full flex items-center justify-center transition-all bg-gradient-to-tr shadow-2xl",
-              activeTab === 'home' ? "from-brand-accent to-orange-400 scale-110 rotate-12" : "from-brand-card to-white/5"
+              activeTab === 'home' ? "from-brand-accent to-blue-400 scale-110 rotate-12" : "from-brand-card to-white/5"
             )}
            >
              <Gift size={28} className={cn(activeTab === 'home' ? "text-white" : "text-white/20")} />
@@ -809,11 +829,11 @@ function NavButton({ icon, label, active = false, onClick = () => {} }: { icon: 
 
 function EventCard({ title, desc, icon, accent, action, locked, status, onClick }: { title: string; desc: string; icon: React.ReactNode; accent: string; action?: React.ReactNode; locked?: boolean; status?: string; onClick?: () => void }) {
   const colors: Record<string, string> = {
-    green: "border-brand-secondary/30 from-emerald-900/40 text-brand-secondary",
+    green: "border-brand-secondary/30 from-purple-900/40 text-brand-secondary",
     gold: "border-brand-primary/30 from-yellow-900/40 text-brand-primary",
-    orange: "border-orange-500/30 from-orange-900/40 text-orange-500",
-    blue: "border-blue-500/30 from-blue-900/40 text-blue-500",
-    purple: "border-purple-500/30 from-purple-900/40 text-purple-500",
+    orange: "border-brand-accent/30 from-blue-900/40 text-brand-accent",
+    blue: "border-brand-accent/30 from-blue-900/40 text-brand-accent",
+    purple: "border-brand-secondary/30 from-purple-900/40 text-brand-secondary",
     red: "border-red-500/30 from-red-900/40 text-red-500"
   };
 

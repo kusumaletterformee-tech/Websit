@@ -7,10 +7,10 @@
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
   
   --color-brand-primary: #FFD700; /* Gold */
-  --color-brand-secondary: #00FF9C; /* Emerald Green */
-  --color-brand-accent: #FF5A00; /* Orange Button */
-  --color-bg-dark: #020F02; /* Deep Black Green */
-  --color-bg-card: #0A220A; /* Deep Green Card */
+  --color-brand-secondary: #D946EF; /* Neon Purple */
+  --color-brand-accent: #00D1FF; /* Blue Glow */
+  --color-bg-dark: #0A021A; /* Deep Dark Purple */
+  --color-bg-card: #150C2D; /* Dark Card Purple */
   --color-gold-text: linear-gradient(180deg, #FFE8A3 0%, #FFD700 50%, #B8860B 100%);
   
   /* Theme specific colors */
@@ -39,18 +39,25 @@
   background: linear-gradient(to bottom, #FFE8A3 0%, #FFD700 50%, #B8860B 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.3));
 }
 
-.vip-card-shadow {
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.1), inset 0 0 10px rgba(255, 255, 255, 0.05);
+.purple-gradient-text {
+  background: linear-gradient(to bottom, #F5D0FE 0%, #D946EF 50%, #701A75 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 10px rgba(217, 70, 239, 0.3));
+}
+
+.blue-glow-shadow {
+  box-shadow: 0 0 20px rgba(0, 209, 255, 0.2), inset 0 0 10px rgba(255, 255, 255, 0.05);
 }
 
 .trading-grid {
   background-image: 
-    radial-gradient(circle at 50% 50%, rgba(0, 255, 156, 0.1) 0%, transparent 50%),
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    radial-gradient(circle at 50% 50%, rgba(217, 70, 239, 0.05) 0%, transparent 50%),
+    linear-gradient(rgba(0, 209, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 209, 255, 0.03) 1px, transparent 1px);
   background-size: 100% 100%, 40px 40px, 40px 40px;
 }
 
@@ -60,7 +67,12 @@
   100% { transform: translateY(0px) rotate(0deg); }
 }
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
+@keyframes sweep {
+  0% { left: -100%; }
+  100% { left: 150%; }
+}
+
+.animate-sweep {
+  animation: sweep 5s ease-in-out infinite;
 }
 
